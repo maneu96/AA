@@ -1,0 +1,85 @@
+****STARTING PART 1****
+Converged in 97 steps, f = 0.000966
+n = 0.001000 , a = 0.500000
+The estimated value is -0.062149
+Converged in 51 steps, f = 0.000871
+n = 0.001000 , a = 1.000000
+The estimated value is -0.041746
+Converged in 26 steps, f = 0.000740
+n = 0.001000 , a = 2.000000
+The estimated value is -0.027201
+Converged in 9 steps, f = 0.000772
+n = 0.001000 , a = 5.000000
+The estimated value is -0.017578
+Converged in 75 steps, f = 0.009225
+n = 0.010000 , a = 0.500000
+The estimated value is -0.192094
+Converged in 40 steps, f = 0.008848
+n = 0.010000 , a = 1.000000
+The estimated value is -0.133028
+Converged in 21 steps, f = 0.006891
+n = 0.010000 , a = 2.000000
+The estimated value is -0.083010
+Converged in 8 steps, f = 0.003090
+n = 0.010000 , a = 5.000000
+The estimated value is -0.035156
+Converged in 64 steps, f = 0.028513
+n = 0.030000 , a = 0.500000
+The estimated value is -0.337717
+Converged in 35 steps, f = 0.025376
+n = 0.030000 , a = 1.000000
+The estimated value is -0.225284
+Converged in 18 steps, f = 0.026286
+n = 0.030000 , a = 2.000000
+The estimated value is -0.162130
+Converged in 7 steps, f = 0.012360
+n = 0.030000 , a = 5.000000
+The estimated value is -0.070312
+Converged in 52 steps, f = 0.097652
+n = 0.100000 , a = 0.500000
+The estimated value is -0.624986
+Converged in 29 steps, f = 0.089851
+n = 0.100000 , a = 1.000000
+The estimated value is -0.423912
+Converged in 16 steps, f = 0.064175
+n = 0.100000 , a = 2.000000
+The estimated value is -0.253327
+Converged in 6 steps, f = 0.049438
+n = 0.100000 , a = 5.000000
+The estimated value is -0.140625
+Converged in 42 steps, f = 0.272400
+n = 0.300000 , a = 0.500000
+The estimated value is -1.043840
+Converged in 24 steps, f = 0.257689
+n = 0.300000 , a = 1.000000
+The estimated value is -0.717898
+Converged in 13 steps, f = 0.244807
+n = 0.300000 , a = 2.000000
+The estimated value is -0.494780
+Converged in 5 steps, f = 0.197754
+n = 0.300000 , a = 5.000000
+The estimated value is -0.281250
+Converged in 30 steps, f = 0.932913
+n = 1.000000 , a = 0.500000
+The estimated value is -1.931749
+Converged in 18 steps, f = 0.912400
+n = 1.000000 , a = 1.000000
+The estimated value is -1.350852
+Converged in 10 steps, f = 0.933866
+n = 1.000000 , a = 2.000000
+The estimated value is -0.966368
+Converged in 4 steps, f = 0.791016
+n = 1.000000 , a = 5.000000
+The estimated value is -0.562500
+Converged in 19 steps, f = 2.883514
+n = 3.000000 , a = 0.500000
+The estimated value is -3.396182
+Converged in 13 steps, f = 2.616738
+n = 3.000000 , a = 1.000000
+The estimated value is -2.287679
+Converged in 8 steps, f = 2.279947
+n = 3.000000 , a = 2.000000
+The estimated value is -1.509949
+Converged in 4 steps, f = 0.791016
+n = 3.000000 , a = 5.000000
+The estimated value is -0.562500
