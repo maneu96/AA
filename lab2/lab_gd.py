@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import math
 
 
-###Quad1
+####Quad1
 def quad1(x_o=-9.0,a=1.0,eta=0.1,threshold=0.01,maxiter=1000,anim=1):
     it = 0
     
@@ -55,17 +55,19 @@ def quad1(x_o=-9.0,a=1.0,eta=0.1,threshold=0.01,maxiter=1000,anim=1):
         plt.show()
         return x_o
 
-a_aux= [0.5,1,2,5]
-n_aux= [0.001, 0.01, 0.03,0.1,0.3,1,3]
-print('****STARTING PART 1****')
-for i in range(len(n_aux)) :
-    for j in range(len(a_aux)) :        
-        x_min = quad1(a=a_aux[j],eta=n_aux[i],anim=0)
-        print('n = %f , a = %f' %(n_aux[i] ,a_aux[j]));
-        print('The estimated value is %f' %(x_min))
+#a_aux= [0.5,1,2,5]
+#n_aux= [0.001, 0.01, 0.03,0.1,0.3,1,3]
+#print('****STARTING PART 1****')
+#for i in range(len(n_aux)) :
+#    for j in range(len(a_aux)) :        
+#        x_min = quad1(a=a_aux[j],eta=n_aux[i],anim=0)
+#        print('n = %f , a = %f' %(n_aux[i] ,a_aux[j]));
+#        print('The estimated value is %f' %(x_min))
        
-        
-        
+x_min = quad1(a=1,eta=3,anim=1)
+print('n = %f , a = %f' %(3 ,1));
+print('The estimated value is %f' %(x_min))
+#        
 #print('****STARTING PART 2****')
 #
 ####Quad2
@@ -125,16 +127,17 @@ for i in range(len(n_aux)) :
 #        print('Converged in %d steps, f = %f' %(it+1,f))
 #        plt.show()
 #        return x_o
-#    
-#
-#x_min = quad2(anim = 1)
-#print('The estimated value is %s' %(x_min))
-#
+    
+
+#for n in [0.01, 0.03,0.1,0.3,1,3]:
+#    x_min = quad2(anim = 0, eta=n)
+#    print('The estimated value is %s for n = %f' %(x_min,n))
 #print('****STARTING PART 2 WITH MOMENTUM****')
-#x_min = quad2(a=20.0,eta=1,anim = 1,alpha=0.9)
-#print('The estimated value is %s' %(x_min))
+#for n in [0.01,0.03,0.1,0.3,1,3]:
+#    x_min = quad2(a=20.0,eta=n,anim=0)#, alpha=0.9)
+#    print('The estimated value is %s for n = %f' %(x_min,n))
 #
-#def rosen(x_o=[-1.5,1.0],a=20.0,eta=0.001,threshold=0.001,maxiter=1000,alpha=0.0,anim = 1,up = 1,down = 1,reduce = 1):
+##def rosen(x_o=[-1.5,1.0],a=20.0,eta=0.001,threshold=0.001,maxiter=1000,alpha=0.0,anim = 1,up = 1,down = 1,reduce = 1):
 #    it = 0
 #    x1 = np.linspace(-2,2,201)
 #    

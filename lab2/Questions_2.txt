@@ -1,3 +1,8 @@
+
+
+
+2.1.1
+
 +----------------------------------------------------+
 ¦ eta                  ¦ a=0.5 ¦ a=1   ¦ a=2   ¦ a=5 ¦
 ¦----------------------+-------+-------+-------+-----¦
@@ -17,5 +22,33 @@
 ¦----------------------+-------+-------+-------+-----¦
 ¦ Fastest              ¦ 1     ¦ 1     ¦ 0.3   ¦ 0.1 ¦
 ¦----------------------+-------+-------+-------+-----¦
-¦ Divergence threshold ¦ NAN   ¦ 3     ¦ 3     ¦ 1   ¦
+¦ Divergence threshold ¦ PRE   ¦ PRE   ¦ PRE   ¦ PRE ¦
 +----------------------------------------------------+
+
+
+2.1.2
+The fastest optimization appears when eta = a = 1 . 
+
+This is true because in this class of functions, F'(x)= ax = 0 => x=0, and F''(x)= a > 0, so it is known that F(X=0) is a minimum. 
+In the gradient descent expression, given by x[n+1] = x[n] * (1 - a*eta) , if 1 = a * eta, then
+x[n+1] = 0 , which constitutes the exact solution for the problem. 
+With the given values for a and eta this equality only happens when a = eta = 1 , therefore it's the fastest optimization.
+
+
+ 
+2.1.3 
+Inspecting the gradient expression, knowing that there is a minimum at X=0, then the total expression should express a 
+convergence between x[n+1] and x[n] , more precisely |x[n+1]| < |x[n]| .
+Since x[n+1] = (1- a*eta)*x[n], by making the correct substituitions we arrive at the expression
+|1 - a*eta| < 1  ==>    a*eta > 0  &&  a*eta < 2    
+
+Therefore the value of eta that corresponds to the divergence threshold is 2.
+
+2.1.4
+The table has all the results expected from the theoretical approach.
+For small values of a*eta , more precisely a*eta <<  1 , the algorithm needs a lot of steps to reach a minimum,
+but it can be reached (within reasonable values) , because it is still convergent.
+When a*eta=1 , it is the fastest, as predicted.
+When a*eta > 2 , the divergence threshold is reached , so the algorithm can't arrive to a minimum.
+
+2.1.5
