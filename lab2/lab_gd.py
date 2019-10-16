@@ -10,44 +10,117 @@ import matplotlib.pyplot as plt
 import math
 
 
-####Quad1
-def quad1(x_o=-9.0,a=1.0,eta=0.1,threshold=0.01,maxiter=1000,anim=1):
+#####Quad1
+#def quad1(x_o=-9.0,a=1.0,eta=0.1,threshold=0.01,maxiter=1000,anim=1):
+#    it = 0
+#    
+#    x1a = np.linspace(-10, 10, 20)
+#    
+#    y = (a*x1a**2)/2
+#    
+#    plt.clf()
+#    plt.plot(x1a,y)
+#    
+#    ###Gradient Method####
+#    while it != maxiter:
+#        fold = (a*(x_o**2))/2
+#        grad = a*x_o
+#        
+#        x_old = x_o
+#        
+#        x_o = x_o-eta*grad
+#        
+#        try:
+#            f = (a*(x_o**2))/2 
+#            
+#            if (f < threshold or fold < threshold):  
+#                
+#                break
+#            else:
+#                f = (a*(x_o**2))/2 
+#                if anim:
+#                    plt.plot([x_old, x_o],[fold, f],'r.-')
+#                    plt.pause(0.2)
+#                it += 1
+#        except:
+#            print('Diverged')
+#            break
+#        
+#    if it == maxiter:
+#        print('Did not converge in %d steps, f = %f' %(it+1,f))
+#        plt.show()
+#        return x_o
+#    else:
+#        print('Converged in %d steps, f = %f' %(it+1,f))
+#        plt.show()
+#        return x_o
+#
+##a_aux= [0.5,1,2,5]
+##n_aux= [0.001, 0.01, 0.03,0.1,0.3,1,3]
+##print('****STARTING PART 1****')
+##for i in range(len(n_aux)) :
+##    for j in range(len(a_aux)) :        
+##        x_min = quad1(a=a_aux[j],eta=n_aux[i],anim=0)
+##        print('n = %f , a = %f' %(n_aux[i] ,a_aux[j]));
+##        print('The estimated value is %f' %(x_min))
+#       
+#x_min = quad1(a=1,eta=3,anim=1)
+#print('n = %f , a = %f' %(3 ,1));
+#print('The estimated value is %f' %(x_min))
+#        
+print('****STARTING PART 2****')
+
+###Quad2
+def quad2(x_o=[-9.0,9.0],a=2.0,eta=0.1,threshold=0.01,maxiter=1000,alpha=0,anim = 1):
     it = 0
+    x1 = np.linspace(-10,10,21)
     
-    x1a = np.linspace(-10, 10, 20)
+    x2 = np.linspace(-10,10,21)
     
-    y = (a*x1a**2)/2
+    [X,Y] = np.meshgrid(x1,x2)
+    
+    Y = (a*X**2+Y**2)/2
     
     plt.clf()
-    plt.plot(x1a,y)
+    plt.contour(Y,10)
+    plt.xticks([0,5,10,15,20],[-10, -5, 0, 5, 10])
+    plt.yticks([0,5,10,15,20],[-10, -5, 0, 5, 10])
+    ax = plt.gca()
+    ax.set_aspect('equal','box')
     
+    plt.tight_layout()
+    
+    
+    f = (a*x_o[0]**2+x_o[1]**2)/2
+    
+    varx = np.array([0,0])
     ###Gradient Method####
     while it != maxiter:
-        fold = (a*(x_o**2))/2
-        grad = a*x_o
+        fold = f
         
-        x_old = x_o
+        grad = np.array([a*x_o[0], x_o[1]])
         
-        x_o = x_o-eta*grad
-        
+        varx = alpha*varx+(1-alpha)*grad
+        x_old = np.asarray(x_o)
+
+        x_o = np.asarray(x_o-eta*varx)
+    
         try:
-            f = (a*(x_o**2))/2 
-            
-            if (f < threshold or fold < threshold):  
-                
+            f = (a*x_o[0]**2+x_o[1]**2)/2
+            if (f < threshold or fold < threshold):
                 break
             else:
-                f = (a*(x_o**2))/2 
                 if anim:
-                    plt.plot([x_old, x_o],[fold, f],'r.-')
-                    plt.pause(0.2)
+                    plt.plot([x_old[0]+10, x_o[0]+10],[x_old[1]+10,x_o[1]+10],'r.-')
+                    plt.pause(0.2)                    
                 it += 1
         except:
-            print('Diverged')
+            print('Diverged!')
+            plt.show()
             break
         
     if it == maxiter:
-        print('Did not converge in %d steps, f = %f' %(it+1,f))
+        print('Did not converge in %d steps, f = %f' %(it,f))
         plt.show()
         return x_o
     else:
@@ -55,79 +128,9 @@ def quad1(x_o=-9.0,a=1.0,eta=0.1,threshold=0.01,maxiter=1000,anim=1):
         plt.show()
         return x_o
 
-#a_aux= [0.5,1,2,5]
-#n_aux= [0.001, 0.01, 0.03,0.1,0.3,1,3]
-#print('****STARTING PART 1****')
-#for i in range(len(n_aux)) :
-#    for j in range(len(a_aux)) :        
-#        x_min = quad1(a=a_aux[j],eta=n_aux[i],anim=0)
-#        print('n = %f , a = %f' %(n_aux[i] ,a_aux[j]));
-#        print('The estimated value is %f' %(x_min))
-       
-x_min = quad1(a=1,eta=3,anim=1)
-print('n = %f , a = %f' %(3 ,1));
-print('The estimated value is %f' %(x_min))
-#        
-#print('****STARTING PART 2****')
-#
-####Quad2
-#def quad2(x_o=[-9.0,9.0],a=2.0,eta=0.1,threshold=0.01,maxiter=1000,alpha=0,anim = 1):
-#    it = 0
-#    x1 = np.linspace(-10,10,21)
-#    
-#    x2 = np.linspace(-10,10,21)
-#    
-#    [X,Y] = np.meshgrid(x1,x2)
-#    
-#    Y = (a*X**2+Y**2)/2
-#    
-#    plt.clf()
-#    plt.contour(Y,10)
-#    plt.xticks([0,5,10,15,20],[-10, -5, 0, 5, 10])
-#    plt.yticks([0,5,10,15,20],[-10, -5, 0, 5, 10])
-#    ax = plt.gca()
-#    ax.set_aspect('equal','box')
-#    
-#    plt.tight_layout()
-#    
-#    
-#    f = (a*x_o[0]**2+x_o[1]**2)/2
-#    
-#    varx = np.array([0,0])
-#    ###Gradient Method####
-#    while it != maxiter:
-#        fold = f
-#        
-#        grad = np.array([a*x_o[0], x_o[1]])
-#        
-#        varx = alpha*varx+(1-alpha)*grad
-#        x_old = np.asarray(x_o)
-#
-#        x_o = np.asarray(x_o-eta*varx)
-#    
-#        try:
-#            f = (a*x_o[0]**2+x_o[1]**2)/2
-#            if (f < threshold or fold < threshold):
-#                break
-#            else:
-#                if anim:
-#                    plt.plot([x_old[0]+10, x_o[0]+10],[x_old[1]+10,x_o[1]+10],'r.-')
-#                    plt.pause(0.2)                    
-#                it += 1
-#        except:
-#            print('Diverged!')
-#            plt.show()
-#            break
-#        
-#    if it == maxiter:
-#        print('Did not converge in %d steps, f = %f' %(it,f))
-#        plt.show()
-#        return x_o
-#    else:
-#        print('Converged in %d steps, f = %f' %(it+1,f))
-#        plt.show()
-#        return x_o
-    
+
+x_min = quad2(anim = 0, eta=0.65,a=2)
+print('The estimated value is %s' %(x_min))
 
 #for n in [0.01, 0.03,0.1,0.3,1,3]:
 #    x_min = quad2(anim = 0, eta=n)

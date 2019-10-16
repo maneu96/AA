@@ -1,3 +1,66 @@
+
+2.1.1
+
++----------------------------------------------------+
+¦ eta                  ¦ a=0.5 ¦ a=1   ¦ a=2   ¦ a=5 ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ 0.001                ¦ >1000 ¦ >1000 ¦ >1000 ¦ 990 ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ 0.01                 ¦ 760   ¦ 414   ¦ 223   ¦ 97  ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ 0.03                 ¦ 252   ¦ 137   ¦ 73    ¦ 31  ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ 0.1                  ¦ 75    ¦ 40    ¦ 21    ¦ 8   ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ 0.3                  ¦ 24    ¦ 12    ¦ 5     ¦ 8   ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ 1                    ¦ 6     ¦ 1     ¦ >1000 ¦ Div ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ 3                    ¦ 6     ¦ Div   ¦ Div   ¦ Div ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ Fastest              ¦ 2     ¦ 1     ¦ 0.5   ¦ 0.2 ¦
+¦----------------------+-------+-------+-------+-----¦
+¦ Divergence threshold ¦ 4     ¦ 2     ¦ 1     ¦ 0.4 ¦
++----------------------------------------------------+
+
+
+2.1.2
+The fastest optimization appears when eta = a = 1 . 
+
+This is true because in this class of functions, F'(x)= ax = 0 => x=0, and F''(x)= a > 0, so it is known that F(X=0) is a minimum. 
+In the gradient descent expression, given by x[n+1] = x[n] * (1 - a*eta) , if 1 = a * eta, then
+x[n+1] = 0 , which constitutes the exact solution for the problem. 
+With the given values for a and eta this equality only happens when a = eta = 1 , therefore it's the fastest optimization.
+
+
+ 
+2.1.3 
+Inspecting the gradient expression, knowing that there is a minimum at X=0, then the total expression should express a 
+convergence between x[n+1] and x[n] , more precisely |x[n+1]| < |x[n]| .
+Since x[n+1] = (1- a*eta)*x[n], by making the correct substituitions we arrive at the expression
+|1 - a*eta| < 1  ==>    a*eta > 0  &&  a*eta < 2    
+
+Therefore the value of eta that corresponds to the divergence threshold is 2.
+
+2.1.4
+The table has all the results expected from the theoretical approach.
+For small values of a*eta , more precisely a*eta <<  1 , the algorithm needs a lot of steps to reach a minimum,
+but it can be reached (within reasonable values) , because it is still convergent.
+When a*eta=1 , it is the fastest, as predicted.
+When a*eta > 2 , the divergence threshold is reached , so the algorithm can't arrive to a minimum.
+
+2.1.5
+
+The fastest optimization corresponds to 1 step to all the values of a.
+X[1] = X[0] - eta * f'(X[0]) 
+If X[1] = 0 => X[0] /f'(X[0]) = eta
+Therefore a value for eta that optimizes the function exists
+
+
+
+
+2.2.1
+
 +----------------------+-------+-------+
 | eta                  | a=2   | a=20  |
 +----------------------+-------+-------+
@@ -7,13 +70,112 @@
 +----------------------+-------+-------+
 | 0.1                  | 40    | >1000 |
 +----------------------+-------+-------+
-| 0.3                  | 12    | >1000 |
+| 0.3                  | 12    | Div   |
 +----------------------+-------+-------+
-| 1                    | >1000 | >1000 |
+| 1                    | >1000 | Div   |
 +----------------------+-------+-------+
-| 3                    | >1000 | >1000 |
+| 3                    | Div   | Div   |
 +----------------------+-------+-------+
-| Fastest              | 0.3   | 0.03  |
+| Fastest              | 0.65  | 0.09  |
 +----------------------+-------+-------+
-| Divergence threshold | NAN   | NAN   |
+| Divergence threshold | 1     | 0.1   |
 +----------------------+-------+-------+
+
+
+
+2.2.2 
+The gradient in this function is : [a*x1  x2]
+When the valley  is wider, the number of iterations decreases, because the gradient applied to the algorithm will be smaller in the x1 coordinate.
+Therefore, more precise steps will be taken towards a solution, and so the number of iterations will be smaller.
+
+2.2.3
+
+It is not possible for all the X[0] (vector 2*1) . Looking at the function, one iteration is only possible, when these conditions apply 
+X[1]= 0 => X[0] =  eta*gradient(f(X[0])) .
+Therefore only in specific cases , either curve levels with the shape of circumferences or points in either axis, always with the right value of eta (distance to origin) lead to the minimum
+position with only 1 iteration
+
+
+
+
+
+3.1
++---------------------+---------+-----------+-----------+-----------+------------+
+| eta                 | alpha=0 | alpha=0.5 | alpha=0.7 | alpha=0.9 | alpha=0.95 |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 0.003               | >1000   | >1000     | >1000     | >1000     | >1000      |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 0.01                | 414     | 411       | 406       | 382       | 338        |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 0.03                | 137     | 134       | 129       | 96        | 171        |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 0.1                 | >1000   | 36        | 31        | 85        | 122        |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 0.3                 | div     | >1000     | 31        | 67        | 148        |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 1                   | div     | div       | div       | 74        | 146        |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 3                   | div     | div       | div       | div       | 172        |
++---------------------+---------+-----------+-----------+-----------+------------+
+| 10                  | div     | div       | div       | div       | div        |
++---------------------+---------+-----------+-----------+-----------+------------+
+| Divergence Treshold | 0.16    | 0.38      | 0.68      | 2.2       | 4.5        |
++---------------------+---------+-----------+-----------+-----------+------------+
+
+
+3.2
+As we can see from the table above, no matter the alpha, for really small values of eta we always obtain a big number of iterations. For really big values of eta, no matter the alpha, it is impossible to obtain a value for the function, it alwaays diverges.
+Otherwise we tend to see that values of alpha closer to one are more likely to find a solution and that smaller values of eta are more likely to find a solution. 
+We can also see that there is no relationship between the number of iterations and a fixed value for alpha(eta) and a varable value os eta(alpha).
+
+4.1
+
++----------------+-------+------------------------+-------------+-------------+------------+-------------+-------------+
+| Number of test | alpha | eta->                  | -20%(0.016) | -10%(0.018) | Best(0.02) | +10%(0.022) | +20%(0.024) |
++----------------+-------+------------------------+-------------+-------------+------------+-------------+-------------+
+| 30             | 0.9   | Number of iterations-> | 272         | 121         | 41         | 216         | 216         |
++----------------+-------+------------------------+-------------+-------------+------------+-------------+-------------+
+
+
+4.2
+It is hard to find values of the parameters that yield a relatively small number of iterations because, as we can see from the table, 
+a small variation of eta leads to a really big change in the number of iterations necessary to find the minimum.
+
+4.3
+
++-------+---------+-----------+-----------+-----------+------------+------------+
+| eta   | alpha=0 | alpha=0.5 | alpha=0.7 | alpha=0.9 | alpha=0.95 | alpha=0.99 |
++-------+---------+-----------+-----------+-----------+------------+------------+
+| 0.001 | 401     | 215       | 171       | 101       | 160        | 158        |
++-------+---------+-----------+-----------+-----------+------------+------------+
+| 0.01  | 384     | 201       | 168       | 165       | 145        | 139        |
++-------+---------+-----------+-----------+-----------+------------+------------+
+| 0.1   | 575     | 306       | 159       | 149       | 138        | 144        |
++-------+---------+-----------+-----------+-----------+------------+------------+
+| 1     | 522     | 305       | 169       | 135       | 132        | 123        |
++-------+---------+-----------+-----------+-----------+------------+------------+
+| 10    | 470     | 292       | 190       | 146       | 113        | 108        |
++-------+---------+-----------+-----------+-----------+------------+------------+
+
+
+
+4.4
+
++-------------------------+-----------------+--------------+-------+----------------------+
+|                         | Number of tests | eta          | alpha | Number of iterations |
++-------------------------+-----------------+--------------+-------+----------------------+
+|                         |                 | -10%(0.0027) |       | >1000                |
++                         +                 +--------------+       +----------------------+
+| Without adaptive steps  | 322             | final(0.003) | 0.21  | 28                   |
++                         +                 +--------------+       +----------------------+
+|                         |                 | +10%(0.0033) |       | >1000                |
++-------------------------+-----------------+--------------+-------+----------------------+
+|                         |                 | -10%(0.0117) |       | 327                  |
++                         +                 +--------------+       +----------------------+
+| With adaptive steps     | 1388            | final(0.013) | 0.87  | 17                   |
++                         +                 +--------------+       +----------------------+
+|                         |                 | +10%(0.0143) |       | 414                  |
++-------------------------+-----------------+--------------+-------+----------------------+
+
+
+5.1
