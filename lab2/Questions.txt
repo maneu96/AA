@@ -177,5 +177,9 @@ a small variation of eta leads to a really big change in the number of iteration
 |                         |                 | +10%(0.0143) |       | 414                  |
 +-------------------------+-----------------+--------------+-------+----------------------+
 
-
+The number of tests with adaptive steps should be smaller than without . That's not true because of the precision obtained
 5.1
+Comparing the efficiency of the gradient descent method, the usage of the momentum term and the usage of adaptive step sizes we can conclude the the latter is the most efficient of them all  
+(besides it might not be noticeable in the table 4.4 but thats due to the precision obtained)
+We can also see a significant improve in efficiency from the gradient descent method to the usage of momentum as this method attenuates rapid oscillations 
+and adds a kind of inertia to the process helping to find the minimum in a faster and more efficient way.
