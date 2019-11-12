@@ -7,7 +7,7 @@ Created on Mon Oct 28 13:13:46 2019
 """
 import random
 import numpy as np
-from matplotlib import plt
+from matplotlib import pyplot as plt
 import math
 from keras.utils import np_utils
 from sklearn.model_selection import train_test_split

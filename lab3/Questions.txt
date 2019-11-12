@@ -1,0 +1,14 @@
+1.4.1
+
+Early stopping is a valuable strategy to train a Neuron Newtwork . It is used mainly to prevent overfitting and speed up the time it takes to properly train a network.
+The criteria is to stop the training process if the loss between epochs is too small. 
+If this is not used the model can "learn" the noise in
+the training set, and overfit the data. If this happens, upon the validation, the network will not output good values.
+
+1.4.2
+
+In the MLP, the execution time is considerably smaller with early stopping. In our code , this condition can not be evaluate since there are
+too many errors with the librarys. The test set performance should also be considerably better with early stopping, since the model did not overfit the data.
+
+1.4.3
+
