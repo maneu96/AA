@@ -7,8 +7,6 @@ Created on Tue Nov 12 17:12:08 2019
 
 from pandas import read_csv
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import multivariate_normal
 from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
@@ -26,7 +24,7 @@ X_train[2,:] = data_FR["count"] #+ X_train[2,:]
 X_train[3,:] = data_EN["count"] #+ X_train[3,:] 
 
 Y_train= range(4) # 0-PT, 1-ES , 2-FR , 3-EN
-model=MultinomialNB()  #with laplace smoothing
+model=MultinomialNB()  # with laplace smoothing ( Não e preciso inicializar com 1)
 model.fit(X_train,Y_train)
 #accuracy_score(Y_train,model.predict(X_train))
 sentences = ["El cine esta abierto.","Tu vais à escola hoje.","Tu vais à escola hoje pois já estás melhor.","English is easy to learn.","Tu vas au cinéma demain matin.","É fácil de entender."]
@@ -36,9 +34,9 @@ X_test=vec_counter.toarray()
 Y_test=[1,0,0,3,2,0]
 
 Y_predict=model.predict(X_test)
-print(accuracy_score(Y_test,Y_predict))
-Y_prob= model.predict_proba(X_test)
+print("test error = ",1- accuracy_score(Y_test,Y_predict))
 
+Y_prob= model.predict_proba(X_test)
 Y_prob.sort()
-margin = Y_prob[:,3]-Y_prob[:,2]
-print(margin)
+margin = Y_prob[:,3] - Y_prob[:,2]
+print("Probability margin = ",margin)
