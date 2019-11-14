@@ -1,78 +1,105 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Oct 28 13:13:46 2019
+Spyder Editor
 
-@author: guilherme
 """
-import random
+
 import numpy as np
+from matplotlib.pyplot import imshow
 from matplotlib import pyplot as plt
-import math
-from keras.utils import np_utils
-from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import Flatten
+#from matplotlib.pyplot import show
+import random
+from keras.utils import to_categorical
+from keras.layers import Flatten
+from keras.layers import Dense
+from keras.layers import Conv2D
+from keras.layers import MaxPooling2D
+from keras import Sequential
 from keras.callbacks import EarlyStopping
-from keras import predict
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
-# %% DATA
-trainX = np.load("mnist_train_data.npy")
-trainy = np.load("mnist_train_labels.npy")
+X_test = np.load("mnist_test_data.npy")
+Y_test = np.load("mnist_test_labels.npy")
+X_train = np.load("mnist_train_data.npy")
+Y_train = np.load("mnist_train_labels.npy")
 
-testX = np.load("mnist_test_data.npy")
-testy = np.load("mnist_test_labels.npy")
-
-sizetrainX = len(trainX)
-sizetrainy = len(trainy)
-
-sizetestX = len(testX)
-sizetesty = len(testy)
-
-print("The size of your training data set is")
-print(sizetrainX,sizetrainy)
-
-print("The size of your test data set is")
-print(sizetestX,sizetesty)
-
-print("Random image from training data set")
-plt.imshow(trainX[random.randrange(1,3001,1)].squeeze(), cmap = "gray")
-plt.show()
-
-print("Random image from test data set")
-plt.imshow(testX[random.randrange(1,501,1)].squeeze(), cmap = "gray")
-plt.show()
-
-ntrainX = trainX/255
-ntrainy = trainy/255
-
-ntestX = testX/255
-ntesty = testy/255
-
-ohtrainy = np_utils.to_categorical(ntrainy,num_classes=10)
-ohtesty = np_utils.to_categorical(ntesty,num_classes=10)
-
-ntestX, nvalidationX, ntesty, nvalidationy = train_test_split(ntrainX, ntrainy, test_size = 0.3)
-# %% MULTI LAYER PERCEPTRON
-
-MLPmodel = Sequential()
-MLPmodel.add(Dense(784, input_shape = (28, 28, 1))) 
-MLPmodel.add(Flatten())
-MLPmodel.add(Dense(64, activation = 'relu'))
-MLPmodel.add(Dense(128, activation = 'relu'))
-MLPmodel.add(Dense(10, activation = 'softmax'))
-
-print(MLPmodel.summary)
-
-es = EarlyStopping(monitor = 'loss', patience = 15, restore_best_weights = True)
-MLPmodel.compile(loss = 'categorical_crossentropy', otimizer = 'adam')
-history = MLPmodel.fit(ntrainX, ohtrainy, epochs = 400, batch_size = 300, callbacks = [es])
-
-plt.plot(history.history['loss'], label='train')
-plt.plot(history.history['val_loss'], label='test')
+# SHOW DATA (TO COMPLETE)
+imshow(X_train[random.randint(0,2999),:,:,0])
 
 
-# %% CONVOLUTIONAL NEURAL NETWORK
-# %%COMMENTS
+X_test=X_test/255
+X_train=X_train/255
+#=np.concatenate((X_train, X_test), axis=0)
+#Y=np.concatenate((Y_train,Y_test))
+Y_train_1hot = to_categorical(Y_train)
+Y_test_1hot = to_categorical(Y_test)
+
+#dividir tudo em 0.3 para validacao e o resto para treino
+
+MLP = Sequential()
+
+MLP.add(Flatten(input_shape=(28,28,1)))
+MLP.add(Dense(units=64,activation='relu'))
+MLP.add(Dense(units=128,activation='relu'))
+MLP.add(Dense(10, activation='softmax'))
+#MLP.summary()
+MLP_2= MLP
+
+ES = EarlyStopping(patience=15,restore_best_weights=True)
+MLP.compile(loss='categorical_crossentropy',optimizer='Adam')
+MLPhistory=MLP.fit(x=X_train,y=Y_train_1hot ,batch_size=300,epochs=400,callbacks=[ES],validation_split=0.3)
+
+
+plt.figure()
+plt.plot(MLPhistory.history['loss'], label='train')
+plt.plot(MLPhistory.history['val_loss'], label='test')
+
+
+Y_predicted= MLP.predict(X_test)
+#Y_predicted= Y_predicted >0.5
+#Y_predicted=Y_predicted.astype(int)
+score=accuracy_score(Y_test_1hot.argmax(axis=1),Y_predicted.argmax(axis=1))
+cm = confusion_matrix(Y_test_1hot.argmax(axis=1),Y_predicted.argmax(axis=1))
+
+
+
+# sem Early Stopping
+MLP_2.compile(loss='categorical_crossentropy',optimizer='Adam')
+MLPhistory_2=MLP_2.fit(x=X_train,y=Y_train_1hot ,batch_size=300,epochs=400,validation_split=0.3)
+
+
+plt.figure()
+plt.plot(MLPhistory_2.history['loss'], label='train')
+plt.plot(MLPhistory_2.history['val_loss'], label='test')
+
+
+Y_predicted_2= MLP_2.predict(X_test)
+score_2=accuracy_score(Y_test_1hot.argmax(axis=1),Y_predicted_2.argmax(axis=1))
+cm_2 = confusion_matrix(Y_test_1hot.argmax(axis=1),Y_predicted_2.argmax(axis=1))
+
+
+
+
+# Convolutional Neural Network
+
+CNN = Sequential()
+CNN.add(Conv2D(filters=16,kernel_size=(3,3),activation='relu',input_shape=(28,28,1)))
+CNN.add(MaxPooling2D(pool_size=(2,2)))
+CNN.add(Conv2D(filters=32,kernel_size=(3,3),activation='relu'))
+CNN.add(MaxPooling2D(pool_size=(2,2)))
+CNN.add(Flatten())
+CNN.add(Dense(units=64,activation='relu'))
+CNN.add(Dense(10, activation='softmax'))
+CNN.summary()
+
+CNN.compile(loss='categorical_crossentropy',optimizer='Adam')
+CNNhistory=CNN.fit(x=X_train,y=Y_train_1hot ,batch_size=300,epochs=400,callbacks=[ES],validation_split=0.3)
+
+
+plt.figure()
+plt.plot(CNNhistory.history['loss'], label='train')
+plt.plot(CNNhistory.history['val_loss'], label='test')
+
+Y_predicted_CNN= CNN.predict(X_test)
+score_CNN=accuracy_score(Y_test_1hot.argmax(axis=1),Y_predicted_CNN.argmax(axis=1))
+cm_CNN = confusion_matrix(Y_test_1hot.argmax(axis=1),Y_predicted_CNN.argmax(axis=1))
