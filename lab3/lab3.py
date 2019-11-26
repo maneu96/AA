@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Created on Thu ‎Nov 14 ‎‏‎16:31:58 2019
 
+@author: manue
 """
 
 import numpy as np
@@ -23,14 +24,17 @@ Y_test = np.load("mnist_test_labels.npy")
 X_train = np.load("mnist_train_data.npy")
 Y_train = np.load("mnist_train_labels.npy")
 
-# SHOW DATA (TO COMPLETE)
-imshow(X_train[random.randint(0,2999),:,:,0])
+print("Random image from train data set")
+plt.imshow(X_train[random.randrange(1,3001,1)].squeeze(), cmap = "gray")
+plt.show()
+print("Random image from test data set")
+plt.figure()
+plt.imshow(X_test[random.randrange(1,501,1)].squeeze(), cmap = "gray")
+plt.show()
 
 
 X_test=X_test/255
 X_train=X_train/255
-#=np.concatenate((X_train, X_test), axis=0)
-#Y=np.concatenate((Y_train,Y_test))
 Y_train_1hot = to_categorical(Y_train)
 Y_test_1hot = to_categorical(Y_test)
 
@@ -56,8 +60,6 @@ plt.plot(MLPhistory.history['val_loss'], label='test')
 
 
 Y_predicted= MLP.predict(X_test)
-#Y_predicted= Y_predicted >0.5
-#Y_predicted=Y_predicted.astype(int)
 score=accuracy_score(Y_test_1hot.argmax(axis=1),Y_predicted.argmax(axis=1))
 cm = confusion_matrix(Y_test_1hot.argmax(axis=1),Y_predicted.argmax(axis=1))
 
